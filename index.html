@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情人節卡片</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 背景圖案 */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.example.com/your-image.png'); /* 在這裡替換成您要顯示的圖案 URL */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 0; /* 確保圖案位於最底層 */
+        }
+
+        .card {
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10; /* 確保卡片位於圖案上方 */
+        }
+
+        .heart {
+            font-size: 80px;
+            color: #ff66b2;
+        }
+
+        .message {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .button {
+            margin-top: 30px;
+            background-color: #ff66b2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #ff3385;
+        }
+
+        /* 愛心動畫 */
+        .heart-animation {
+            position: absolute;
+            font-size: 30px;
+            color: #ff66b2;
+            animation: float-heart 3s forwards;
+        }
+
+        @keyframes float-heart {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-400px) scale(1.5);
+            }
+        }
+
+        /* 彈出訊息框 */
+        .message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #ff66b2, #ff3385);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: pop-up 0.5s ease-in-out;
+        }
+
+        /* 訊息框的動畫效果 */
+        @keyframes pop-up {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* 彈出訊息中的文字動畫 */
+        .message-box p {
+            animation: fade-in 2s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* 隱藏SoundCloud播放器 */
+        .soundcloud-iframe {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="heart">❤️</div>
+        <div class="message">
+            早安寶寶，<br> 情人節快樂！
+        </div>
+        <button class="button" onclick="showHearts()">點一下會有驚喜喔~</button>
+    </div>
+
+    <!-- 隱藏 SoundCloud 音樂播放器 -->
+    <iframe id="musicPlayer" class="soundcloud-iframe" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1650677070&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+
+    <!-- 彈出訊息框 -->
+    <div id="messageBox" class="message-box">
+        <p>寶寶，不知不覺的我們已經在一起160天了，雖然過程中經歷了不少的波瀾，甚至好幾次我們都差點鬧到不歡而散，但不知為甚麼，好像總有一股魔力吸引著我們，讓我們對彼此不離不棄，雖然現在還是有很多的困難阻撓著我們在一起，但我相信我們能一起熬過去的，最後，希望我們未來能少一點傷心，多一點開心，我想和寶寶一起玩到老，活到老，情人節快樂💖</p>
+    </div>
+
+    <script>
+        // 初始生成大量愛心
+        function generateInitialHearts() {
+            const body = document.body;
+            const heartCount = 100; // 開始時生成100個愛心
+
+            // 創建多個愛心
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-animation');
+                heart.innerText = '❤️';
+
+                // 隨機位置，隨機大小，隨機顏色
+                const randomX = Math.random() * window.innerWidth; // 水平隨機位置
+                const randomY = Math.random() * window.innerHeight; // 垂直隨機位置
+                const randomSize = Math.random() * 30 + 20; // 愛心的大小隨機在 20px 至 50px 之間
+                const randomDelay = Math.random() * 1 + 0.5; // 隨機延遲時間
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 70%)`; // 隨機顏色
+
+                heart.style.left = randomX + 'px';
+                heart.style.top = randomY + 'px'; // 設定隨機的縱向位置
+                heart.style.fontSize = randomSize + 'px';
+                heart.style.color = randomColor;
+                heart.style.animationDelay = randomDelay + 's';
+
+                body.appendChild(heart);
+
+                // 在動畫結束後刪除愛心
+                setTimeout(() => {
+                    heart.remove();
+                }, (randomDelay + 3) * 1000);
+            }
+        }
+
+        // 持續生成愛心
+        function generateHeartsContinuously() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-animation');
+                heart.innerText = '❤️';
+
+                // 隨機位置，隨機大小，隨機顏色
+                const randomX = Math.random() * window.innerWidth; // 水平隨機位置
+                const randomY = Math.random() * window.innerHeight; // 垂直隨機位置
+                const randomSize = Math.random() * 30 + 20; // 愛心的大小隨機在 20px 至 50px 之間
+                const randomDelay = Math.random() * 1 + 0.5; // 隨機延遲時間
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 70%)`; // 隨機顏色
+
+                heart.style.left = randomX + 'px';
+                heart.style.top = randomY + 'px'; // 設定隨機的縱向位置
+                heart.style.fontSize = randomSize + 'px';
+                heart.style.color = randomColor;
+                heart.style.animationDelay = randomDelay + 's';
+
+                document.body.appendChild(heart);
+
+                // 在動畫結束後刪除愛心
+                setTimeout(() => {
+                    heart.remove();
+                }, (randomDelay + 3) * 1000);
+            }, 200); // 每200ms生成一個愛心
+        }
+
+        // 顯示訊息框並播放音樂
+        function showHearts() {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.style.display = 'block';
+
+            // 播放音樂
+            const musicPlayer = document.getElementById('musicPlayer');
+            musicPlayer.style.display = 'none'; // 隱藏音樂播放器
+
+            // 開始生成初始大量愛心
+            generateInitialHearts();
+
+            // 開始持續生成愛心
+            generateHeartsContinuously();
+        }
+    </script>
+
+</body>
+</html>
